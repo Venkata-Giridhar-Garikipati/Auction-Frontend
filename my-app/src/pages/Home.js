@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaGavel, FaShieldAlt, FaClock, FaUsers, FaArrowRight, FaStar, FaTrophy } from 'react-icons/fa';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import AuctionImage from '../components/AuctionImage';
 
 const Home = () => {
   const [featuredAuctions, setFeaturedAuctions] = useState([]);
@@ -90,11 +91,9 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {featuredAuctions.map((auction) => (
                 <div key={auction.id} className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
-                  <img 
-                    src={auction.imageUrl || "https://image.pngaaa.com/13/1887013-middle.png"} 
-                    alt={auction.title} 
-                    className="w-full h-48 object-cover"
-                  />
+                  <div className="h-48">
+                    <AuctionImage auctionId={auction.id} />
+                  </div>
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{auction.title}</h3>
                     <p className="text-theme-primary font-bold">Starting bid: ${auction.basePrice}</p>
