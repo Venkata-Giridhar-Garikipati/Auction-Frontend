@@ -7,13 +7,12 @@ import BidHistory from './BidHistory';
 import { FaClock, FaGavel, FaArrowLeft } from 'react-icons/fa';
 import Navbar from './Navbar';
 import Footer from './Footer';
-//import { useNotifications } from '../context/NotificationContext';
+
 
 const AuctionDetails = () => {
   const { auctionId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  //const { addNotification } = useNotifications();
   const [auction, setAuction] = useState(null);
   const [bids, setBids] = useState([]);
   const [bidAmount, setBidAmount] = useState('');
@@ -98,21 +97,7 @@ const AuctionDetails = () => {
           setBids(bidsData.data);
         }
 
-        // Notify auction owner
-        // await fetch('http://localhost:8080/notifications', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({
-        //     userId: auction.userId,
-        //     message: `New bid of $${bidAmount} placed on your auction "${auction.title}"`,
-        //     type: 'bid'
-        //   })
-        // });
-
-      //  addNotification(`Your bid of $${bidAmount} has been placed!`, 'success');
-      } else {
+        } else {
         toast.error(result.message || 'Error placing bid');
       }
     } catch (error) {

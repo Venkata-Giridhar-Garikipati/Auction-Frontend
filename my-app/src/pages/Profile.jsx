@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FaUser, FaEnvelope, FaPhone, FaArrowLeft, FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from 'react-toastify';
+import { deleteUser } from '../services/authService';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -58,27 +59,22 @@ const Profile = () => {
 
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "Warning: Deleting your account will:\n\n" +
+      "1. Remove all your bids\n" +
+      "2. Delete all your auctions\n" +
+      "3. Permanently delete your account\n\n" +
+      "This action cannot be undone. Are you sure you want to continue?"
     );
 
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8080/users/${user.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-
-        if (response.ok) {
-          toast.success('Account deleted successfully');
-          localStorage.removeItem('user');
-          navigate('/signin');
-        } else {
-          toast.error('Failed to delete account');
-        }
+        await deleteUser(user.id);
+        toast.success('Account and all associated data deleted successfully');
+        localStorage.removeItem('user');
+        navigate('/signin');
       } catch (error) {
-        toast.error('Error deleting account: ' + error.message);
+        console.error('Delete account error:', error);
+        toast.error(error.message || 'Unable to delete account. Please try again later.');
       }
     }
   };

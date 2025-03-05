@@ -66,18 +66,60 @@ export const updateUserDetails = async (userData) => {
   }
 };
 
+const deleteUserBids = async (userId) => {
+  const response = await fetch(`http://localhost:8080/bids/user/${userId}`, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.message || "Failed to delete user's bids");
+  }
+  return response;
+};
+
+const deleteUserAuctions = async (userId) => {
+  const response = await fetch(`http://localhost:8080/auctions/user/${userId}`, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.message || "Failed to delete user's auctions");
+  }
+  return response;
+};
+
 export const deleteUser = async (userId) => {
   try {
+    // Step 1: Delete all bids by this user
+    await deleteUserBids(userId);
+    
+    // Step 2: Delete all auctions by this user (which will cascade delete related bids and images)
+    await deleteUserAuctions(userId);
+    
+    // Step 3: Finally delete the user account
     const response = await fetch(`http://localhost:8080/users/${userId}`, {
       method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
+
     if (!response.ok) {
-      const errorData = await response.json(); // Parse error response
-      throw new Error(errorData.message || "Deletion failed");
+      const data = await response.json();
+      throw new Error(data.message || `Failed to delete user (Status: ${response.status})`);
     }
-    return response.json();
+
+    return { success: true, message: 'Account deleted successfully' };
   } catch (error) {
     console.error("Error during deletion:", error);
-    throw error;
+    throw new Error(error.message || 'Failed to delete user account. Please try again later.');
   }
 };

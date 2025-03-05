@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <FaGavel className="text-2xl text-theme-secondary" />
-              <span className="text-xl text-red-600 font-bold">Auction Hub</span>
+              <span className="text-xl text-red-600 font-bold">Auction Bazaar</span>
             </div>
             <p className="text-gray-400">
               Your trusted platform for online auctions

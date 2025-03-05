@@ -14,13 +14,12 @@ import AuctionDetails from './components/AuctionDetails';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute'; // Updated import path
 import Home from "./pages/Home";
-import { NotificationProvider } from './context/NotificationContext';
 import './index.css';
 
 function App() {
   return (
     <AuthProvider>
-      <NotificationProvider>
+
         <Router>
           <div className="min-h-screen flex flex-col">
             <Routes>
@@ -57,7 +56,7 @@ function App() {
             pauseOnHover
           />
         </Router>
-      </NotificationProvider>
+    
     </AuthProvider>
   );
 }

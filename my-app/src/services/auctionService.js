@@ -82,34 +82,6 @@ export const getUserAuctions = async (userName) => {
   }
 };
 
-// export const deleteAuction = async (auctionId) => {
-//   try {
-//     // First, delete associated bids
-//     const deleteBidsResponse = await fetch(`http://localhost:8080/bids/auction/${auctionId}`, {
-//       method: "DELETE",
-//     });
-
-//     if (!deleteBidsResponse.ok) {
-//       const errorData = await deleteBidsResponse.json();
-//       throw new Error(errorData.message || `Failed to delete bids for auction ${auctionId}`);
-//     }
-
-//     // Then, delete the auction
-//     const response = await fetch(`http://localhost:8080/auctions/${auctionId}`, {
-//       method: "DELETE",
-//     });
-
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.message || "Auction deletion failed");
-//     }
-
-//     return { success: true }; // Return a success message
-//   } catch (error) {
-//     console.error("Error deleting auction:", error);
-//     throw error;
-//   }
-// };
 export const deleteAuction = async (auctionId) => {
   try {
     // First, delete associated bids
